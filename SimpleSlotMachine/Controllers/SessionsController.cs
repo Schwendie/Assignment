@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SimpleSlotMachine.Models;
 using SimpleSlotMachine.Services;
 
 namespace SimpleSlotMachine.Controllers

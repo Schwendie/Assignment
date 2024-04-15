@@ -5,18 +5,38 @@
 
 @if (session != null)
 {
-    <h2>SessionId: @session.SessionId</h2>
+    <h1>Current Credits: @session.CurrentCredits</h1>
+    <button @onclick="StartRoll">Roll!</button>
+    @if (result != null)
+    {
+        <div>
+            <table>
+                <tr>
+                    <td>@result.Blocks[0]</td>
+                    <td>@result.Blocks[1]</td>
+                    <td>@result.Blocks[2]</td>
+                </tr>
+            </table>
+        </div>
+    }
+    <button>Cashout</button>
 }
 
 
 @code {
     public Session session;
+    public RollResult result;
 
     public HttpClient httpClient = new HttpClient();
 
     public async Task StartSession()
     {
         session = await httpClient.GetFromJsonAsync<Session>("https://localhost:7036/api/Sessions");
+    }
+
+    public async Task StartRoll()
+    {
+        result = await httpClient.GetFromJsonAsync<RollResult>("https://localhost:7036/api/rolls/" + session.SessionId + "/start");
     }
 
     protected override async Task OnInitializedAsync()
@@ -29,5 +49,11 @@
         public string SessionId { get; set; }
         public int StartingCredits { get; set; }
         public int CurrentCredits { get; set; }
+    }
+
+    public class RollResult
+    {
+        public string[] Blocks { get; set; }
+        public int Reward { get; set; }
     }
 }

@@ -55,10 +55,12 @@ namespace SimpleSlotMachine.Services
             if (isWin)
             {
                 session.CurrentCredits += reward;
+                Console.WriteLine("Credits: " + session.CurrentCredits);
             }
             else
             {
                 session.CurrentCredits--;
+                Console.WriteLine("Credits: " + session.CurrentCredits);
             }
             _sessionService.UpdateSession(session);
 
