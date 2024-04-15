@@ -16,7 +16,7 @@ namespace SimpleSlotMachine.Controllers
             _slotMachineService = slotMachineService;
         }
 
-        [HttpPost("start")]
+        [HttpGet("start")]
         public IActionResult StartRoll(string sessionId)
         {
             var result = _slotMachineService.StartRoll(sessionId);

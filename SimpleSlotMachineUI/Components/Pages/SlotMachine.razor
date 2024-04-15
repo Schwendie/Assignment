@@ -1,0 +1,33 @@
+﻿@page "/SlotMachine"
+@rendermode InteractiveServer
+
+<h3>SlotMachine</h3>
+
+@if (session != null)
+{
+    <h2>SessionId: @session.SessionId</h2>
+}
+
+
+@code {
+    public Session session;
+
+    public HttpClient httpClient = new HttpClient();
+
+    public async Task StartSession()
+    {
+        session = await httpClient.GetFromJsonAsync<Session>("https://localhost:7036/api/Sessions");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await StartSession();
+    }
+
+    public class Session
+    {
+        public string SessionId { get; set; }
+        public int StartingCredits { get; set; }
+        public int CurrentCredits { get; set; }
+    }
+}
